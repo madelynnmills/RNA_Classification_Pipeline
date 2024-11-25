@@ -1,1 +1,4 @@
 rna_analysis_results.csv
+venv
+__pycache__/
+*.pyc
