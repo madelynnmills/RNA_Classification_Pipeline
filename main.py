@@ -41,8 +41,12 @@ def main():
     print("Visualizing data distribution...")
     plot_class_distribution(combined_df)
 
+    X = combined_df.drop(columns=["ID", "Sequence", "RNA_Type"], errors="ignore")
+    y = combined_df["RNA_Type"]
+
+
     print("Training RNA classifier...")
-    model, label_encoder = train_rna_classifier(combined_df)
+    model, label_encoder = train_rna_classifier(X, y)
 
     if model:
         print("Visualizing feature importance...")
