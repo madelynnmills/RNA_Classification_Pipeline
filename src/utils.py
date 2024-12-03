@@ -1,9 +1,9 @@
-import matplotlib.pyplot as plt
-import pandas as pd
-import os
+import matplotlib.pyplot as plt         #used for generating plots to visualize data distribution and feature importance
+import pandas as pd         #provides tools for manipulating DataFrames
+import os       #facilitates file and directory management, such as creating directories and checking file existence
 
 
-def save_to_csv(df, filename, output_dir="./output"):
+def save_to_csv(df, filename, output_dir="./output"):       #function purpose: saves a DataFrame to a csv file in a specified directory
     """
     Saves DataFrame to a CSV file in a designated output directory.
 
@@ -15,14 +15,14 @@ def save_to_csv(df, filename, output_dir="./output"):
     Returns:
         str: Path to the saved file, or None if saving failed.
     """
-    if df.empty:
+    if df.empty:        #checks for empty DataFrame: prevents saving if the DataFrame has no data
         print(f"Warning: Attempted to save an empty DataFrame to {filename}.")
         return None
 
     try:
-        # Ensure output directory exists
+        # Ensure output directory exists before attempting to save
         output_dir = os.path.abspath(output_dir)
-        os.makedirs(output_dir, exist_ok=True)
+        os.makedirs(output_dir, exist_ok=True)      #uses exist_ok=True to avoid errors if the directory already exists
 
         # Save file
         filepath = os.path.join(output_dir, filename)
@@ -34,7 +34,7 @@ def save_to_csv(df, filename, output_dir="./output"):
         return None
 
 
-def load_test_dataset(filepath):
+def load_test_dataset(filepath):        #function purpose: loads a dataset from a csv file
     """
     Loads a test dataset from a CSV file.
 
@@ -44,11 +44,11 @@ def load_test_dataset(filepath):
     Returns:
         pd.DataFrame: The loaded dataset as a DataFrame, or an empty DataFrame if an error occurs.
     """
-    if not os.path.exists(filepath):
+    if not os.path.exists(filepath):        #checks file existence: prevents loading if the file doesn't exist, avoiding runtime errors
         print(f"Error: File not found at {filepath}. Returning empty DataFrame.")
         return pd.DataFrame()
 
-    try:
+    try:        #attempts to load file: uses pd.read_csv to read the file into a DataFrame
         df = pd.read_csv(filepath)
         if df.empty:
             print(f"Warning: Loaded an empty DataFrame from {filepath}.")
@@ -60,7 +60,7 @@ def load_test_dataset(filepath):
         return pd.DataFrame()
 
 
-def plot_data_distribution(df):
+def plot_data_distribution(df):         #function purpose: visualizes the distribution of RNA types and motif frequencies
     """
     Plots the distribution of RNA types and motif frequencies.
 
@@ -70,7 +70,7 @@ def plot_data_distribution(df):
     Returns:
         None
     """
-    if "RNA_Type" not in df.columns:
+    if "RNA_Type" not in df.columns:        #checks for required column: ensures the RNA_type column exists in teh Dataframe, as it's necessary for plotting RNA distribution
         print("Error: 'RNA_Type' column not found in the DataFrame.")
         return
 
@@ -95,7 +95,7 @@ def plot_data_distribution(df):
         print(f"Error during plotting data distribution: {e}")
 
 
-def plot_feature_importance(model, feature_names):
+def plot_feature_importance(model, feature_names):      #function purpose: visualizes the importance of features used in the trained model
     """
     Plots feature importance from the trained model.
 
@@ -106,7 +106,7 @@ def plot_feature_importance(model, feature_names):
     Returns:
         None
     """
-    if not hasattr(model, "feature_importances_"):
+    if not hasattr(model, "feature_importances_"):      #ensures the model provides feature_importances_
         print("Error: Model does not have feature importances.")
         return
 
@@ -124,7 +124,7 @@ def plot_feature_importance(model, feature_names):
         print(f"Error during plotting feature importance: {e}")
 
 
-def calculate_motif_frequency(sequence, motif):
+def calculate_motif_frequency(sequence, motif):     #function purpose: counts occurences of a specific motif in a sequence
     """
     Calculate the frequency of a specific motif in a sequence.
 
@@ -138,7 +138,7 @@ def calculate_motif_frequency(sequence, motif):
     return sequence.count(motif)
 
 
-def find_motif_positions(sequence, motif):
+def find_motif_positions(sequence, motif):      #function purpose: identifies all starting positions of a potif within a sequence
     """
     Find the starting positions of a motif within a sequence.
 
